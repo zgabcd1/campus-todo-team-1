@@ -28,6 +28,12 @@ public class TaskService {
     }
 
     public List<Task> filterByPriority(Priority priority) {
-        throw new UnsupportedOperationException("TODO(#1): filter tasks by priority");
+        List<Task> matched = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getPriority() == priority) {
+                matched.add(task);
+            }
+        }
+        return List.copyOf(matched);
     }
 }
