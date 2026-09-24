@@ -33,6 +33,39 @@ class TaskServiceTest {
     }
 
     @Nested
+    class TaskCompletion {
+
+        @Test
+        void shouldCompleteTaskById() {
+            TaskService service = new TaskService();
+            var task = service.addTask("提交实验报告");
+
+            service.completeTask(task.getId());
+
+            assertTrue(task.isCompleted());
+        }
+
+        @Test
+        void shouldRejectUnknownTaskId() {
+            TaskService service = new TaskService();
+            service.addTask("提交实验报告");
+
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.completeTask(999L));
+        }
+
+        @Test
+        void shouldRejectCompletingTwice() {
+            TaskService service = new TaskService();
+            var task = service.addTask("提交实验报告");
+            service.completeTask(task.getId());
+
+            assertThrows(IllegalStateException.class,
+                    () -> service.completeTask(task.getId()));
+        }
+    }
+
+    @Nested
     class PriorityFiltering {
 
         @Test

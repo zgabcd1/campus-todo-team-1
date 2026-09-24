@@ -28,6 +28,26 @@ public class TaskService {
     }
 
     /**
+     * 按编号完成任务。
+     *
+     * @param id 任务编号
+     * @throws IllegalArgumentException 任务不存在
+     * @throws IllegalStateException 任务已完成
+     */
+    public void completeTask(long id) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                if (task.isCompleted()) {
+                    throw new IllegalStateException("任务已完成：" + id);
+                }
+                task.complete();
+                return;
+            }
+        }
+        throw new IllegalArgumentException("任务不存在：" + id);
+    }
+
+    /**
      * 按优先级筛选任务。
      *
      * @param priority 目标优先级，不允许为 null
