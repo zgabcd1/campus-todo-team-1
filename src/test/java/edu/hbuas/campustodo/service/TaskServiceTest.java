@@ -76,5 +76,14 @@ class TaskServiceTest {
 
             assertTrue(lowTasks.isEmpty());
         }
+
+        @Test
+        void shouldRejectNullPriority() {
+            TaskService service = new TaskService();
+            service.addTask("高数作业", Priority.HIGH);
+
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.filterByPriority(null));
+        }
     }
 }

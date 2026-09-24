@@ -27,7 +27,16 @@ public class TaskService {
         return List.copyOf(tasks);
     }
 
+    /**
+     * 按优先级筛选任务。
+     *
+     * @param priority 目标优先级，不允许为 null
+     * @return 命中任务快照；无命中时返回空列表
+     */
     public List<Task> filterByPriority(Priority priority) {
+        if (priority == null) {
+            throw new IllegalArgumentException("优先级不能为空");
+        }
         List<Task> matched = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getPriority() == priority) {
