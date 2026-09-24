@@ -21,4 +21,8 @@ public class TaskService {
     public List<Task> listAll() {
         return List.copyOf(tasks);
     }
+
+    public void completeTask(long id) {
+        throw new UnsupportedOperationException("TODO(#2): complete task by id");
+    }
 }
