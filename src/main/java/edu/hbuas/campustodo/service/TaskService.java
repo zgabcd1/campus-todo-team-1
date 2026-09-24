@@ -1,5 +1,6 @@
 package edu.hbuas.campustodo.service;
 
+import edu.hbuas.campustodo.model.Priority;
 import edu.hbuas.campustodo.model.Task;
 
 import java.util.ArrayList;
@@ -13,7 +14,11 @@ public class TaskService {
     private long nextId = 1;
 
     public Task addTask(String title) {
-        Task task = new Task(nextId++, title);
+        return addTask(title, Priority.MEDIUM);
+    }
+
+    public Task addTask(String title, Priority priority) {
+        Task task = new Task(nextId++, title, priority);
         tasks.add(task);
         return task;
     }
@@ -24,5 +29,24 @@ public class TaskService {
 
     public void completeTask(long id) {
         throw new UnsupportedOperationException("TODO(#2): complete task by id");
+    }
+
+    /**
+     * 按优先级筛选任务。
+     *
+     * @param priority 目标优先级，不允许为 null
+     * @return 命中任务快照；无命中时返回空列表
+     */
+    public List<Task> filterByPriority(Priority priority) {
+        if (priority == null) {
+            throw new IllegalArgumentException("优先级不能为空");
+        }
+        List<Task> matched = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getPriority() == priority) {
+                matched.add(task);
+            }
+        }
+        return List.copyOf(matched);
     }
 }
